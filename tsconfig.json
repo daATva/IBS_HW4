@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "target": "ESNext", // Уровень версии JavaScript, на который будет транслироваться код
+    "lib": ["DOM", "DOM.Iterable", "ESNext"], // Подключение библиотек для браузерного окружения
+    "allowJs": true, // Разрешает использование файлов .js
+    "skipLibCheck": true, // Пропуск проверки типов в файлах библиотек
+    "esModuleInterop": true, // Упрощает работу с CommonJS-модулями
+    "allowSyntheticDefaultImports": true, // Разрешает использование default-импортов в модуле
+    "strict": true, // Включает строгий режим проверки типов
+    "forceConsistentCasingInFileNames": true, // Запрещает несогласованность регистра в путях
+    "module": "ESNext", // Устанавливает модульную систему
+    "moduleResolution": "Node", // Способ разрешения модулей (Node.js-совместимый)
+    "resolveJsonModule": true, // Разрешает импорт JSON-файлов
+    "isolatedModules": true, // Запрещает использование TypeScript-файлов без модулей
+    "noEmit": true, // Запрещает вывод скомпилированных файлов (используем с React)
+    "jsx": "react-jsx" // Использует новую трансформацию JSX для React
+  },
+  "include": ["src"], // Указывает папку с исходным кодом
+  "exclude": ["node_modules", "build"] // Исключает сборку и зависимости
+}

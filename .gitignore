@@ -1,0 +1,34 @@
+# Папки и файлы для игнорирования
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Webpack
+/dist/*
+!/dist/.gitkeep              
+!.gitkeep             # Исключение для пустых папок
+
+# Editor и IDE
+.vscode/              # Настройки VS Code
+.idea/                # Настройки IntelliJ IDEA
+*.suo                 # Visual Studio
+*.ntvs*               # Visual Studio Node.js Tools
+*.njsproj             # Visual Studio Node.js Tools
+*.sln                 # Visual Studio Solution Fiаles
+
+# Операционная система
+.DS_Store             # macOS
+Thumbs.db             # Windows
+desktop.ini           # Windows
+
+# Logs
+*.log                 # Лог-файлы
+logs/
+*.log.*
+
+# Сторонние файлы конфигурации
+.env                  # Переменные окружения
+
