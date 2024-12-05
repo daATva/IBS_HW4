@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProducts, setFilteredProducts } from "../../redux/productsSlice";
 import Header from "../../components/Header/Header";
@@ -30,7 +30,7 @@ const Main: React.FC = () => {
     dispatch(fetchProducts());
   }, [dispatch]);
 
-  useEffect(() => {
+  const filterProducts = useCallback(() => {
     if (debouncedSearchTerm) {
       const filtered = products.filter((product) =>
         product.name.toLowerCase().includes(debouncedSearchTerm.toLowerCase())
@@ -40,6 +40,11 @@ const Main: React.FC = () => {
       dispatch(setFilteredProducts(products));
     }
   }, [debouncedSearchTerm, products, dispatch]);
+
+  // Only filter products when debounced search term or products change
+  useEffect(() => {
+    filterProducts();
+  }, [debouncedSearchTerm, filterProducts]);
 
   const handleSelectProduct = (product: Product) => {
     navigate(`/product/${product.id}`);
@@ -55,6 +60,10 @@ const Main: React.FC = () => {
 
   if (error) {
     return <div>Ошибка загрузки товаров: {error}</div>;
+  }
+
+  if (!products.length) {
+    return <div>Товары не найдены.</div>;
   }
 
   return (
