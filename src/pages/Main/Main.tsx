@@ -41,7 +41,6 @@ const Main: React.FC = () => {
     }
   }, [debouncedSearchTerm, products, dispatch]);
 
-  // Only filter products when debounced search term or products change
   useEffect(() => {
     filterProducts();
   }, [debouncedSearchTerm, filterProducts]);

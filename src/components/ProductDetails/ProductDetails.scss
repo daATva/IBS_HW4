@@ -30,9 +30,9 @@ body {
 
     img {
       align-self: center;
-      width: 200px;
+      width: 300px;
       height: 100%;
-      padding: 16px 50px;
+      padding: 50px 75px;
     }
   }
 
@@ -198,7 +198,6 @@ body {
   .item__favorite {
     order: 2;
     padding: 11px 10px 11px 65px;
-    margin-left: auto;
   }
 
   .product__btns {
@@ -221,6 +220,5 @@ body {
 
   .product__content .product__preview img {
     align-self: center;
-    width: 42%;
   }
 }

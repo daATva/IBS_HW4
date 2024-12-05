@@ -21,12 +21,7 @@ const ProductDetails: React.FC = () => {
 
   useEffect(() => {
     if (id) {
-      console.log("ID из URL:", id);
-      console.log("Список продуктов:", products);
-
       const selectedProduct = products.find((p) => p.id.toString() === id);
-
-      console.log("Найденный продукт:", selectedProduct);
 
       setProduct(selectedProduct || null);
     }

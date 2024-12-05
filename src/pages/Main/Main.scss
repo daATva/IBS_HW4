@@ -3,14 +3,15 @@ body {
   font-family: "Roboto", sans-serif;
   box-sizing: border-box;
 }
-
+header {
+  margin-bottom: 20px;
+}
 /* Main */
 .catalog__group {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
   gap: 16px;
-
   .catalog__item {
     flex: 0 0 220px;
     cursor: pointer;
