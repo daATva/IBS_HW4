@@ -2,10 +2,6 @@ body {
   margin: 0;
   font-family: "Roboto", sans-serif;
   box-sizing: border-box;
-
-  * {
-    transition: 0.2s;
-  }
 }
 
 .product__content {
@@ -213,8 +209,8 @@ body {
     margin-top: 16px;
   }
 
-  .product__content .product__buy .product__cart {
-    order: 4;
+  .product__cart {
+    order: 3;
     margin-top: 15px;
   }
 

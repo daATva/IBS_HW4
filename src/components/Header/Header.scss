@@ -6,25 +6,22 @@ header {
   padding: 24px;
   margin-bottom: 20px;
 
-  div {
-    display: flex;
-    align-items: center;
-    border-bottom: 2px solid transparent;
-  }
-
   .search__box {
     width: 300px;
     height: 40px;
     position: relative;
+    border-bottom: 2px solid transparent;
 
     &:hover {
-      border-bottom: 2px solid #e97f03;
+      border-bottom-color: #e97f03;
     }
 
     input {
-      border: 0;
+      border: none;
       height: 16px;
       color: #323232;
+      width: 100%;
+      background: none;
 
       &::placeholder {
         color: rgb(50, 50, 50);
@@ -33,16 +30,18 @@ header {
 
       &:focus {
         outline: none;
+      }
 
-        + .i_div {
-          visibility: visible;
-          border-bottom: 2px solid #e97f03;
-        }
+      &:focus {
+        visibility: visible;
+        border-bottom-color: #e97f03;
       }
     }
 
-    &:focus-within .header_search path {
-      fill: #e97f03;
+    &:focus-within {
+      .header_search path {
+        fill: #e97f03;
+      }
     }
   }
 
@@ -51,6 +50,7 @@ header {
     height: 17.5px;
     margin-right: 11.5px;
     cursor: pointer;
+
     &:hover {
       filter: invert(91%) sepia(12%) saturate(7307%) hue-rotate(324deg)
         brightness(100%) contrast(98%);
@@ -61,9 +61,11 @@ header {
     margin-right: 21px;
     cursor: pointer;
   }
+
   .header_userpage {
     cursor: pointer;
   }
+
   img {
     width: 20px;
     height: 20px;
@@ -77,5 +79,6 @@ header {
   button {
     background: none;
     border: none;
+    cursor: pointer;
   }
 }

@@ -41,12 +41,14 @@ const Header: React.FC<HeaderProps> = ({ onSearch }) => {
                 borderRadius: 4,
               },
             }}
-            InputProps={{
-              startAdornment: (
-                <IconButton aria-label="search" disabled>
-                  <SearchIcon color="primary" />
-                </IconButton>
-              ),
+            slotProps={{
+              input: {
+                startAdornment: (
+                  <IconButton aria-label="search" disabled>
+                    <SearchIcon color="primary" />
+                  </IconButton>
+                ),
+              },
             }}
           />
         </Box>
