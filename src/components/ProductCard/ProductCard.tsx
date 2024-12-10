@@ -50,19 +50,13 @@ const ProductCard: React.FC<ProductCardProps> = ({
     updateFavorites(isFavorite);
   }, [isFavorite, updateFavorites]);
 
-  const toggleFavorite = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    e.preventDefault();
+  const toggleFavorite = () => {
     setIsFavorite((prev) => !prev);
   };
 
   const handleClick = (e: React.MouseEvent) => {
-    if (
-      e.target instanceof HTMLElement &&
-      e.target.closest(".favorite-button")
-    ) {
-      e.preventDefault();
-    } else if (onSelectProduct) {
+    e.stopPropagation();
+    if (onSelectProduct) {
       onSelectProduct(product);
     }
   };
@@ -71,7 +65,6 @@ const ProductCard: React.FC<ProductCardProps> = ({
     <Card
       component={Link}
       to={`/product/${product.id}`}
-      onClick={handleClick}
       sx={{
         width: 220,
         transition: "0.2s",
@@ -100,7 +93,11 @@ const ProductCard: React.FC<ProductCardProps> = ({
         }}
       >
         <IconButton
-          onClick={toggleFavorite}
+          onClick={(e) => {
+            e.stopPropagation(); // Предотвращаем переход по ссылке
+            toggleFavorite(); // Меняем состояние "избранное"
+            handleClick(e); // Вызываем обработчик выбора продукта
+          }}
           className="favorite-button"
           sx={{
             alignSelf: "flex-end",

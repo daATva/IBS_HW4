@@ -1,6 +1,6 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchProducts, setFilteredProducts } from "../../redux/productsSlice";
+import { fetchProducts } from "../../redux/productsSlice";
 import Header from "../../components/Header/Header";
 import Catalog from "../../components/Catalog/Catalog";
 import { RootState, AppDispatch } from "../../redux/store";
@@ -19,7 +19,7 @@ export interface Product {
 
 const Main: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const { products, filteredProducts, loading, error } = useSelector(
+  const { products, loading, error } = useSelector(
     (state: RootState) => state.products
   );
   const [searchTerm, setSearchTerm] = useState<string>("");
@@ -30,20 +30,14 @@ const Main: React.FC = () => {
     dispatch(fetchProducts());
   }, [dispatch]);
 
-  const filterProducts = useCallback(() => {
-    if (debouncedSearchTerm) {
-      const filtered = products.filter((product) =>
-        product.name.toLowerCase().includes(debouncedSearchTerm.toLowerCase())
-      );
-      dispatch(setFilteredProducts(filtered));
-    } else {
-      dispatch(setFilteredProducts(products));
+  const filteredProducts = useMemo(() => {
+    if (!debouncedSearchTerm) {
+      return products;
     }
-  }, [debouncedSearchTerm, products, dispatch]);
-
-  useEffect(() => {
-    filterProducts();
-  }, [debouncedSearchTerm, filterProducts]);
+    return products.filter((product) =>
+      product.name.toLowerCase().includes(debouncedSearchTerm.toLowerCase())
+    );
+  }, [debouncedSearchTerm, products]);
 
   const handleSelectProduct = (product: Product) => {
     navigate(`/product/${product.id}`);
