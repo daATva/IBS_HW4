@@ -1,8 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
-import { Provider } from "react-redux"; // Импортируем Provider
-import { store } from "./redux/store"; // Импортируем ваш Redux Store
+import { Provider } from "react-redux";
+import { store } from "./redux/store";
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import theme from "./theme/theme";
@@ -14,10 +14,8 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      {" "}
-      {/* Оборачиваем App в Provider */}
       <ThemeProvider theme={theme}>
-        <CssBaseline /> {/* Сбрасывает базовые стили браузера */}
+        <CssBaseline />
         <App />
       </ThemeProvider>
     </Provider>

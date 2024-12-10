@@ -10,7 +10,7 @@ export interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = ({ onSearch }) => {
-  const theme = useTheme(); // Получаем доступ к теме
+  const theme = useTheme();
 
   const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (onSearch) {

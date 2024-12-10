@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 import "./Main.scss";
 
 export interface Product {
-  id: number;
+  id: string;
   name: string;
   price: { value: number; currency: string };
   picture?: { alt?: string };

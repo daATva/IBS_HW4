@@ -3,15 +3,14 @@ body {
   font-family: "Roboto", sans-serif;
   box-sizing: border-box;
 }
-header {
-  margin-bottom: 20px;
-}
+
 /* Main */
 .catalog__group {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
   gap: 16px;
+  margin-top: 20px;
   .catalog__item {
     flex: 0 0 220px;
     cursor: pointer;
@@ -32,7 +31,7 @@ header {
     height: 272px;
     row-gap: 16px;
     transition: 0.2s;
-
+    text-decoration: none;
     &:hover {
       background: #f2f2f2;
       box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.15);
@@ -42,6 +41,8 @@ header {
 
   &title {
     text-align: center;
+    text-decoration: none;
+    color: rebeccapurple;
   }
 
   &favorite {
