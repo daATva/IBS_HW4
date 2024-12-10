@@ -2,11 +2,15 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { fetchAllItems } from "../api/api";
 
 interface Product {
-  id: number;
+  id: string;
   name: string;
   price: { value: number; currency: string };
   like: boolean;
   description: string;
+  picture: {
+    path: string;
+    alt: string;
+  };
 }
 
 interface ProductsState {

@@ -1,12 +1,20 @@
-import React, { useState, useEffect } from "react";
-import favoriteImage from "../../assets/favorite.svg";
-import favoriteBorder from "../../assets/favorite border.svg";
+import React, { useState, useEffect, useCallback } from "react";
+import { Link } from "react-router-dom";
+import {
+  Card,
+  CardContent,
+  CardMedia,
+  Typography,
+  IconButton,
+} from "@mui/material";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import productImage from "../../assets/prod.png";
 import { Product } from "../../pages/Main/Main";
 
 interface ProductCardProps {
   product: Product;
-  onSelectProduct: (product: Product) => void;
+  onSelectProduct?: (product: Product) => void;
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({
@@ -15,55 +23,121 @@ const ProductCard: React.FC<ProductCardProps> = ({
 }) => {
   const [isFavorite, setIsFavorite] = useState<boolean>(product.like);
 
-  useEffect(() => {
-    const savedFavorites: Product[] = JSON.parse(
-      localStorage.getItem("favorites") || "[]"
-    );
-    if (isFavorite) {
-      if (!savedFavorites.some((fav) => fav.id === product.id)) {
-        localStorage.setItem(
-          "favorites",
-          JSON.stringify([...savedFavorites, product])
-        );
-      }
-    } else {
-      const newFavorites = savedFavorites.filter(
-        (fav) => fav.id !== product.id
+  const updateFavorites = useCallback(
+    (newFavoriteStatus: boolean) => {
+      const savedFavorites: Product[] = JSON.parse(
+        localStorage.getItem("favorites") || "[]"
       );
-      localStorage.setItem("favorites", JSON.stringify(newFavorites));
-    }
-  }, [isFavorite, product]);
 
-  const toggleFavorite = (e: React.MouseEvent) => {
-    e.stopPropagation();
+      if (newFavoriteStatus) {
+        if (!savedFavorites.some((fav) => fav.id === product.id)) {
+          localStorage.setItem(
+            "favorites",
+            JSON.stringify([...savedFavorites, product])
+          );
+        }
+      } else {
+        const updatedFavorites = savedFavorites.filter(
+          (fav) => fav.id !== product.id
+        );
+        localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
+      }
+    },
+    [product]
+  );
+
+  useEffect(() => {
+    updateFavorites(isFavorite);
+  }, [isFavorite, updateFavorites]);
+
+  const toggleFavorite = () => {
     setIsFavorite((prev) => !prev);
   };
 
+  const handleClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (onSelectProduct) {
+      onSelectProduct(product);
+    }
+  };
+
   return (
-    <div className="catalog__item" onClick={() => onSelectProduct(product)}>
-      <div className="item__group">
-        <div
-          className={`item__favorite ${isFavorite ? "favorite-active" : ""}`}
-          onClick={toggleFavorite}
+    <Card
+      component={Link}
+      to={`/product/${product.id}`}
+      sx={{
+        width: 220,
+        transition: "0.2s",
+        textDecoration: "none",
+        display: "flex",
+        flexDirection: "column",
+        backgroundColor: "transparent",
+        border: "none",
+        boxShadow: "none",
+        "--Paper-shadow": "none",
+        "&:hover": {
+          backgroundColor: "#f2f2f2",
+          boxShadow: "2px 2px 5px rgba(0, 0, 0, 0.15)",
+          borderRadius: "10px",
+        },
+      }}
+    >
+      <CardContent
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "flex-start",
+          padding: "1rem",
+          gap: "0.5rem",
+        }}
+      >
+        <IconButton
+          onClick={(e) => {
+            e.stopPropagation(); // Предотвращаем переход по ссылке
+            toggleFavorite(); // Меняем состояние "избранное"
+            handleClick(e); // Вызываем обработчик выбора продукта
+          }}
+          className="favorite-button"
+          sx={{
+            alignSelf: "flex-end",
+            padding: "0.5rem",
+            color: isFavorite ? "primary.main" : "sprimary.main",
+          }}
         >
-          <img
-            src={isFavorite ? favoriteBorder : favoriteImage}
-            alt="Favorite"
-          />
-        </div>
-        <div className="item__image">
-          <img
-            src={productImage}
-            alt={product.picture?.alt || product.name}
-            className="item__min"
-          />
-        </div>
-        <div className="item__title">{product.name}</div>
-        <div className="item__price">
+          {isFavorite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+        </IconButton>
+
+        <CardMedia
+          component="img"
+          height="110"
+          image={productImage}
+          alt={product.picture?.alt || product.name}
+          sx={{ objectFit: "contain", padding: "1rem" }}
+        />
+        <Typography
+          variant="h6"
+          component="div"
+          sx={{
+            fontSize: "18px",
+            fontWeight: 400,
+            textAlign: "center",
+          }}
+        >
+          {product.name}
+        </Typography>
+        <Typography
+          variant="body2"
+          sx={{
+            fontSize: "14px",
+            color: "#545454",
+            textAlign: "center",
+          }}
+        >
           {product.price.value} {product.price.currency}
-        </div>
-      </div>
-    </div>
+        </Typography>
+      </CardContent>
+    </Card>
   );
 };
 

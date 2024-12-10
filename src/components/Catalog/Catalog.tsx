@@ -13,7 +13,7 @@ const Catalog: React.FC<CatalogProps> = ({
   onSelectProduct,
   products,
 }) => {
-  if (!products || products.length === 0) {
+  if (!products?.length) {
     return <div>Товары не найдены.</div>;
   }
 

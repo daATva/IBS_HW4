@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchProducts, setFilteredProducts } from "../../redux/productsSlice";
+import { fetchProducts } from "../../redux/productsSlice";
 import Header from "../../components/Header/Header";
 import Catalog from "../../components/Catalog/Catalog";
 import { RootState, AppDispatch } from "../../redux/store";
@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 import "./Main.scss";
 
 export interface Product {
-  id: number;
+  id: string;
   name: string;
   price: { value: number; currency: string };
   picture?: { alt?: string };
@@ -19,7 +19,7 @@ export interface Product {
 
 const Main: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const { products, filteredProducts, loading, error } = useSelector(
+  const { products, loading, error } = useSelector(
     (state: RootState) => state.products
   );
   const [searchTerm, setSearchTerm] = useState<string>("");
@@ -30,16 +30,14 @@ const Main: React.FC = () => {
     dispatch(fetchProducts());
   }, [dispatch]);
 
-  useEffect(() => {
-    if (debouncedSearchTerm) {
-      const filtered = products.filter((product) =>
-        product.name.toLowerCase().includes(debouncedSearchTerm.toLowerCase())
-      );
-      dispatch(setFilteredProducts(filtered));
-    } else {
-      dispatch(setFilteredProducts(products));
+  const filteredProducts = useMemo(() => {
+    if (!debouncedSearchTerm) {
+      return products;
     }
-  }, [debouncedSearchTerm, products, dispatch]);
+    return products.filter((product) =>
+      product.name.toLowerCase().includes(debouncedSearchTerm.toLowerCase())
+    );
+  }, [debouncedSearchTerm, products]);
 
   const handleSelectProduct = (product: Product) => {
     navigate(`/product/${product.id}`);
@@ -55,6 +53,10 @@ const Main: React.FC = () => {
 
   if (error) {
     return <div>Ошибка загрузки товаров: {error}</div>;
+  }
+
+  if (!products.length) {
+    return <div>Товары не найдены.</div>;
   }
 
   return (
