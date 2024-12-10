@@ -78,6 +78,10 @@ const ProductCard: React.FC<ProductCardProps> = ({
         textDecoration: "none",
         display: "flex",
         flexDirection: "column",
+        backgroundColor: "transparent",
+        border: "none",
+        boxShadow: "none",
+        "--Paper-shadow": "none",
         "&:hover": {
           backgroundColor: "#f2f2f2",
           boxShadow: "2px 2px 5px rgba(0, 0, 0, 0.15)",
@@ -109,7 +113,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
 
         <CardMedia
           component="img"
-          height="140"
+          height="110"
           image={productImage}
           alt={product.picture?.alt || product.name}
           sx={{ objectFit: "contain", padding: "1rem" }}
